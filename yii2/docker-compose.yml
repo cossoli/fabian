@@ -1,0 +1,35 @@
+version: "3.1"
+
+services:
+    app:
+        image: yiisoftware/yii2-php:8.1-apache
+        volumes: 
+            - ./src/composer/cache:/root/.composer/cache:delegated
+            - ./src/basic:/app:delegated
+        environment: 
+            DB_DATABASE: pwd
+            DB_PASSWORD: pwd123
+            DB_USER: pwd
+            DB_HOST: db
+            PHP_USER_ID: 501
+        ports: 
+            - 8000:80
+    pgadmin:
+        image: dpage/pgadmin4:latest
+        environment:
+            PGADMIN_DEFAULT_EMAIL: usuarioadmin@gmail.com
+            PGADMIN_DEFAULT_PASSWORD: passadmin
+        ports: 
+            - 8001:80
+    db:
+        image: postgres:14-alpine
+        environment:
+            POSTGRES_PASSWORD: pwd123
+            POSTGRES_USER: pwd
+            POSTGRES_DB: pwd
+        volumes:
+            - ./localdata/postgres:/var/lib/postgresql/data:delegated
+        ports:
+            - '5432:5432'
+
+            
