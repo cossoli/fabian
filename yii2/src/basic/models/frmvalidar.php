@@ -23,7 +23,7 @@ class FrmValidar extends Model
         ];
 
     }
-    public function attrbutelabels()
+    public function attributelabels()
     {
         return [
             'id' => 'codigo:',

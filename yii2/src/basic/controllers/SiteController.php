@@ -12,6 +12,10 @@ use app\models\ContactForm;
 use app\models\frmvalidar;
 use app\models\TblUsuario;
 use app\models\usuarios;
+use app\models\Querry;
+use yii\helpers\Html;
+
+
 
 class SiteController extends Controller
 {
@@ -204,9 +208,41 @@ class SiteController extends Controller
 
 public function actionUsuarios($mensaje=null)
 {
-     $data = TblUsuario::find()-> all();
+    $model = new Querry;
 
-    return $this->render('usuarios',["mensaje"=>$mensaje,'data'=>$data ]);
+    if ($model-> load(Yii::$app->request->post()))
+    {
+        if ($model->validate( ))
+
+        {
+            $search = html::encore($model->querry);
+
+
+            $data = TblUsuario::find()-> all()
+                  ->where(['like', 'id', $search ])
+                  ->orwhere(['like', 'nombre', $search])
+                  ->orwhere(['like', 'email', $search])
+                    ->all();
+
+        }
+        else
+            {
+              $model->getErrors();
+            }
+    }
+        else 
+
+      {
+
+     $data = TblUsuario::find()-> all();
+     
+       }
+
+
+    return $this->render('usuarios',
+                           ["mensaje"=>$mensaje,
+                           'data'=>$data,
+                            'model'=>$model ]);
 }
 
 
