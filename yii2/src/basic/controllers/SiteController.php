@@ -168,10 +168,10 @@ class SiteController extends Controller
 
     public function actionFrmvalidar()
     {
-        $model = new frmvalidar;
+        $model = new frmValidar;
         $mensaje = null;
 
-        if ($model-> load(Yii::$app->request->post()))
+        if ($model->load(Yii::$app->request->post()))
         {
           if ($model->validate( )
           )
@@ -186,8 +186,8 @@ class SiteController extends Controller
              {
                  $mensaje =" El usuario fue guardado";
                
-                 $mensaje->nombre=null;
-                 $mensaje->email=null;
+                 $model->nombre=null;
+                 $model->email=null;
 
              }
           $mensaje = 'A ocurrido un error en insertar';
