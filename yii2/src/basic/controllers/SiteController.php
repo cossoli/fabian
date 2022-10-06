@@ -12,16 +12,14 @@ use app\models\ContactForm;
 use app\models\frmvalidar;
 use app\models\TblUsuario;
 use app\models\usuarios;
-use app\models\Querry;
+use app\models\Query;
 use yii\helpers\Html;
+use yii\data\Pagination;
 
 
 
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
@@ -208,21 +206,21 @@ class SiteController extends Controller
 
 public function actionUsuarios($mensaje=null)
 {
-    $model = new Querry;
+    $model = new Query;
 
     if ($model-> load(Yii::$app->request->post()))
     {
         if ($model->validate( ))
 
         {
-            $search = html::encore($model->querry);
+            $search = html::encore($model->query);
 
 
-            $data = TblUsuario::find()-> all()
+            $query = TblUsuario::find()-> all()
                   ->where(['like', 'id', $search ])
                   ->orwhere(['like', 'nombre', $search])
-                  ->orwhere(['like', 'email', $search])
-                    ->all();
+                  ->orwhere(['like', 'email', $search]);
+                 
 
         }
         else
@@ -234,16 +232,32 @@ public function actionUsuarios($mensaje=null)
 
       {
 
-     $data = TblUsuario::find()-> all();
+     $query = TblUsuario::find();
      
        }
 
+  
 
-    return $this->render('usuarios',
+$countQuery = clone $query;
+
+$pages = new Pagination([
+         'totalCount' => $countQuery->count(),
+         'pageSize' => 2
+
+ ]); 
+
+ $data =$query->offset($pages->offset)
+          ->limit($pages->limit)
+          ->all();
+
+
+ return $this->render('usuarios',
                            ["mensaje"=>$mensaje,
                            'data'=>$data,
-                            'model'=>$model ]);
+                            'model'=>$model,
+                            'pages'=> $pages ]);
 }
+
 
 
 public function actionDelUsuarios($id=null)

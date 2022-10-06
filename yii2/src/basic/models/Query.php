@@ -6,9 +6,9 @@ use Yii;
 use yii\base\Model;
 
 
-class Querry extends Model
+class Query extends Model
 {
-    public $querry;
+    public $query;
        
 
     public Function rules()
@@ -16,7 +16,7 @@ class Querry extends Model
         return [
  
             
-           ['querry', 'match', 'pattern'=>"/^[0-9a-z]+$/i",'message'=>'Solo letras y Numeros']
+           ['query', 'match', 'pattern'=>"/^[0-9a-z]+$/i",'message'=>'Solo letras y Numeros']
           
         ];
     }
@@ -24,7 +24,7 @@ class Querry extends Model
     public function attributelabels()
     {
         return [
-            'querry' => 'buscar:',
+            'query' => 'buscar:',
             
         ];
     }

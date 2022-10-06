@@ -3,6 +3,8 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\data\Pagination;
+use yii\widgets\LinkPager;
 
 ?>
 <a href = "<?= Url::toRoute("site/frmvalidar") ?>">nuevo ... </a>
@@ -22,7 +24,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <<div class = "form-grup">
-        <?= $form->field($model, "querry")->input("search")?>
+        <?= $form->field($model, "query")->input("search")?>
             </div>
     
     
@@ -68,5 +70,10 @@ use yii\widgets\ActiveForm;
 <?php endforeach ?>
 
 </table>
+
+<?= LinkPager::widget([
+    'pagination'=>$pages
+]);
+
 
 
