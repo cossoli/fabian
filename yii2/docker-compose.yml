@@ -12,6 +12,7 @@ services:
             DB_USER: pwd
             DB_HOST: db
             PHP_USER_ID: 501
+            PRODUCCION: 0
         ports: 
             - 8000:80
     pgadmin:
